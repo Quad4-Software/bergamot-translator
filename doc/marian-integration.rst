@@ -46,7 +46,7 @@ required to set ``-DUSE_WASM_COMPATIBLE_SOURCE=on``.
 
 ::
 
-    $ git clone https://github.com/browsermt/bergamot-translator
+    $ git clone https://github.com/Quad4-Software/bergamot-translator
     $ cd bergamot-translator
     $ mkdir build
     $ cd build

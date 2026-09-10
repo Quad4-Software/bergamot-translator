@@ -1,22 +1,46 @@
 # Continuous Integration
 
-[Circle CI](https://circleci.com/) is used for continuous integration. Configured via `./.circleci/config.yml`.
+Continuous integration is handled by [GitHub Actions](https://docs.github.com/en/actions). The workflows live in `.github/workflows/`.
 
-##  Run Circle CI locally (requires Docker)
+## Workflows
 
-1. [Install the CircleCI local cli](https://circleci.com/docs/2.0/local-cli/#installation)
-2. Validate Circle CI configuration (useful exercise before pushing any changes to the configuration)
+| Workflow | Purpose |
+| --- | --- |
+| `build.yml` | Builds Python wheels, the WASM artifacts, and publishes releases on tags. |
+| `native.yml` | Native Linux and macOS builds plus the Bergamot regression test suite. |
+| `windows.yml` | Native Windows x64 build. |
+| `arm.yml` | Android ARM64 cross-compile using the Android NDK. |
+| `coding-styles.yml` | `clang-format` and `clang-tidy` checks. |
+| `codeql.yml` | Static analysis for C++, Python, and JavaScript/TypeScript. |
 
-```shell
-circleci config validate -c .circleci/config.yml
+## Security notes
+
+- All third-party actions are pinned to full commit SHAs.
+- Jobs declare least-privilege `permissions:` blocks.
+- PyPI publishing uses trusted publishing (`id-token: write`) instead of a stored token.
+- npm publishing uses `--provenance` with `id-token: write`.
+- Releases are created with `softprops/action-gh-release`, pinned by SHA.
+- Documentation deploys to GitHub Pages via `actions/deploy-pages`.
+
+## Running locally
+
+The WASM build can be reproduced locally with Docker using the same emsdk image that the workflow uses.
+
+```bash
+bash build-wasm.sh
 ```
 
-3. To better mimic the starting point for CI, commit your changes and clone your repository into a clean directory then run CircleCI inside that directory:
+Or via the package build script in `wasm/module/`:
 
-```shell
-git clone . /tmp/$(basename $PWD)
-cd /tmp/$(basename $PWD)
-circleci build
+```bash
+npm run build
 ```
 
-Note: Steps related to caching and uploading/storing artifacts will report as failed locally. This is not necessarily a problem, they are designed to fail since the operations are not supported locally by the CircleCI build agent.
+The native build follows the standard CMake flow.
+
+```bash
+mkdir build-native
+cd build-native
+cmake ..
+make -j2
+```

@@ -31,7 +31,7 @@ This package comes with two translator implementations:
 - [LatencyOptimisedTranslator](#latencyoptimisedtranslator) is more useful for an interactive session, say like Google Translate, where you're only working on translating one input at a time.
 - [BatchTranslator](#batchtranslator) is optimised for processing a large number of translations as fast as possible (but individual translations might take some time), e.g. translating a large number of strings or all paragraphs in a document.
 
-## LantencyOptimisedTranslator
+## LatencyOptimisedTranslator
 
 Translator best suited for interactive usage. Runs with a single worker thread and a batch-size of 1 to give you a response as quickly as possible. It will cancel any pending translations that aren't currently being processed if you submit a new one.
 
@@ -50,7 +50,7 @@ const translator = new LatencyOptimisedTranslator({
 - `registryUrl` - url to a list of models and their paths. Defaults to `https://bergamot.s3.amazonaws.com/models/index.json`.
 - `workerUrl` - url to `translator-worker.js`. Defaults to `"worker/translator-worker.js"` relative to the path of `translator.js`.
 - `downloadTimeout` - Maximum time we're attempting to download model files before failing. Defaults to `60000` or 60 seconds. Set to `0` to disable.
-- `cacheSize` - Maximum number of sentences in kept translation cache (per worker, workers do not share their cache). This is an ideal maximum as it is a hash-map, in practice about 1/3th is occupied. If set to `0`, translation cache is disabled (the default).
+- `cacheSize` - Maximum number of sentences in kept translation cache (per worker, workers do not share their cache). This is an ideal maximum as it is a hash-map, in practice about a third is occupied. If set to `0`, translation cache is disabled (the default).
 - `useNativeIntGemm` - Try to link to native IntGEMM implementation when loading the WASM binary. This is only implemented in the privileged extension context of Firefox Nightly. If it fails, it will always fall back to the included implementation. Defaults to `false`.
 
 ### translate()

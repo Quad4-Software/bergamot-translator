@@ -23,7 +23,12 @@ wasm/test_page/node_modules
 /emsdk
 models
 wasm/module/worker/bergamot-translator-worker.*
-wasm/module/browsermt-bergamot-translator-*.tgz
+wasm/module/*bergamot-translator-*.tgz
+wheelhouse/
+doc/build/
+doc/api/
+doc/doxygen/
 
 # VSCode
 .vscode
+__pycache__/
