@@ -65,7 +65,7 @@ jobs:
         run: patch -p1 < patches/01-marian-fstream-for-macos.patch
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@cfbec0988a9c12de5a84206e42aa17442af10d44 # v4.2.1
+        uses: pypa/cibuildwheel@e090b81e30c4d855ea63bf4b6e59204c09a101ae # v4.2.1
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_ENVIRONMENT_LINUX: |
