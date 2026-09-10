@@ -67,7 +67,7 @@ jobs:
       - name: Build wheels
         uses: pypa/cibuildwheel@cfbec0988a9c12de5a84206e42aa17442af10d44 # v4.2.1
         env:
-          CIBW_MANYLINUX_X86_64_IMAGE: manylinux2014
+          CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_ENVIRONMENT_LINUX: |
             BUILD_ARCH=core-avx-i
             USE_CCACHE=1
@@ -78,6 +78,7 @@ jobs:
             PYTHON_LOCAL_VERSION_IDENTIFIER=${{ env.PYTHON_LOCAL_VERSION_IDENTIFIER }}
             CCACHE_DIR=/host/${{ env.ccache_dir }}
             CCACHE_BASEDIR=/host/${{ env.ccache_basedir }}
+            CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DBLAS_INCLUDE_DIR=/usr/include/openblas -DCBLAS_LIBRARIES=/usr/lib64/libopenblas.so -DCBLAS_INCLUDE_DIR=/usr/include/openblas
           CIBW_ENVIRONMENT_MACOS: |
             BUILD_ARCH=core-avx-i
             USE_CCACHE=1
@@ -89,10 +90,9 @@ jobs:
             CCACHE_DIR=${{ env.ccache_dir }}
             CCACHE_BASEDIR=${{ env.ccache_basedir }}
             MACOSX_DEPLOYMENT_TARGET=10.9
+            CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DCBLAS_LIBRARIES=/usr/local/opt/openblas/lib/libopenblas.dylib -DCBLAS_INCLUDE_DIR=/usr/local/opt/openblas/include
           CIBW_BEFORE_BUILD_LINUX: |
-            yum install -y ccache
-            yum-config-manager -y --add-repo https://yum.repos.intel.com/mkl/setup/intel-mkl.repo
-            yum install -y intel-mkl
+            yum install -y ccache openblas-devel
             chmod -R a+rwx /host/${{ env.ccache_dir }}
             ccache -s
             ccache -z
@@ -333,7 +333,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: python3 -m pip install black isort pytype
+        run: |
+          python3 -m pip install black isort pytype
+          python3 -m pip install requests 'urllib3<2' pyyaml 'platformdirs'
 
       - name: Formatting checks
         run: |

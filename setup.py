@@ -52,6 +52,7 @@ class CMakeBuild(build_ext):
             f"-DCOMPILE_PYTHON=ON",
             f"-DSSPLIT_USE_INTERNAL_PCRE2=ON",
             f"-DBUILD_ARCH={build_arch}",
+            f"-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
         ]
 
         build_args = ["-t", "_bergamot"]
