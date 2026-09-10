@@ -1,32 +1,32 @@
 {
-  "name": "@browsermt/bergamot-translator",
-  "version": "0.4.9",
+  "name": "@quad4/bergamot-translator",
+  "version": "0.5.0",
   "description": "Cross platform C++ library focusing on optimized machine translation on the consumer-grade device.",
-  "homepage": "https://github.com/browsermt/bergamot-translator#readme",
+  "homepage": "https://github.com/Quad4-Software/bergamot-translator#readme",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/browsermt/bergamot-translator.git"
+    "url": "git+ssh://git@github.com/Quad4-Software/bergamot-translator.git"
   },
   "keywords": [
     "machine",
-    "translation"
+    "translation",
+    "wasm",
+    "offline"
   ],
-  "author": "",
+  "author": "Quad4 Software",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/browsermt/bergamot-translator/issues"
+    "url": "https://github.com/Quad4-Software/bergamot-translator/issues"
   },
   "type": "module",
   "main": "translator.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "files": [
     "worker/bergamot-translator-worker.js",
     "worker/bergamot-translator-worker.wasm",
     "worker/translator-worker.js",
     "translator.js",
-    "main.js"
+    "main.js",
+    "README.md"
   ],
   "config": {
     "emscripten_version": "3.1.8"

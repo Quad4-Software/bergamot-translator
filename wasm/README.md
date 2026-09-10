@@ -37,7 +37,7 @@ Alternatively refer to the file `test_page/js/worker.js` that demonstrates how t
 
 * Browse to the following page:
     ```
-    http://localhost:80
+    http://localhost:8080
     ```
 
 * Perform translations:

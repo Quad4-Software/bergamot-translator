@@ -1,13 +1,13 @@
 # Installation
 
 ```bash
-npm install @browsermt/bergamot-translator
+npm install @quad4/bergamot-translator
 ```
 
 # Quick start
 
 ```js
-import {BatchTranslator} from "@browsermt/bergamot-translator/translator.js";
+import {BatchTranslator} from "@quad4/bergamot-translator/translator.js";
 
 const translator = new BatchTranslator();
 
@@ -47,7 +47,7 @@ const translator = new LatencyOptimisedTranslator({
 ```
 
 - `pivotLanguage` - language code for the language to use as an intermediate if there is no direct translation model available. Defaults to `"en"`. Set to `null` to disable pivoting.
-- `registryUrl` - url to a list of models and their paths. Defaults to `https://storage.googleapis.com/bergamot-models-sandbox/0.3.3/registry.json`.
+- `registryUrl` - url to a list of models and their paths. Defaults to `https://bergamot.s3.amazonaws.com/models/index.json`.
 - `workerUrl` - url to `translator-worker.js`. Defaults to `"worker/translator-worker.js"` relative to the path of `translator.js`.
 - `downloadTimeout` - Maximum time we're attempting to download model files before failing. Defaults to `60000` or 60 seconds. Set to `0` to disable.
 - `cacheSize` - Maximum number of sentences in kept translation cache (per worker, workers do not share their cache). This is an ideal maximum as it is a hash-map, in practice about 1/3th is occupied. If set to `0`, translation cache is disabled (the default).
@@ -166,7 +166,7 @@ Example of an alternative implementation that loads models from data.statmt.org,
 
 ```js
 class CustomBacking extends TranslatorBacking {
-    async loadModelRegistery() {
+    async loadModelRegistry() {
         const response = await fetch('https://translatelocally.com/models.json');
         const {models} = await response.json();
 

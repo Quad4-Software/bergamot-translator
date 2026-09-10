@@ -80,7 +80,7 @@ export class CancelledError extends Error {}
          * registry of all available models and their urls
          * @type {Promise<Model[]>}
          */
-        this.registry = this.loadModelRegistery();
+        this.registry = this.loadModelRegistry();
 
         /**
          * Map of downloaded model data files as buffers per model.
@@ -203,6 +203,18 @@ export class CancelledError extends Error {}
      *     }
      *   }[]
      * }>}
+     */
+    /**
+     * Deprecated misspelled name kept for backwards compatibility. Existing
+     * subclasses may still override `loadModelRegistery`, but new code should
+     * use `loadModelRegistry`.
+     */
+    async loadModelRegistry() {
+        return this.loadModelRegistery();
+    }
+
+    /**
+     * @deprecated use {@link loadModelRegistry}
      */
     async loadModelRegistery() {
         const response = await fetch(this.registryUrl, {credentials: 'omit'});

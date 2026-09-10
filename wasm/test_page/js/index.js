@@ -1,4 +1,4 @@
-import {LatencyOptimisedTranslator, TranslatorBacking, CancelledError, SupersededError} from '../node_modules/@browsermt/bergamot-translator/translator.js';
+import {LatencyOptimisedTranslator, TranslatorBacking, CancelledError, SupersededError} from '../node_modules/@quad4/bergamot-translator/translator.js';
 
 function $(selector) {
   return document.querySelector(selector);

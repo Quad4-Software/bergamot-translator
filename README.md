@@ -1,13 +1,28 @@
 # Bergamot Translator
 
-[![CircleCI badge](https://img.shields.io/circleci/project/github/browsermt/bergamot-translator/main.svg?label=CircleCI)](https://circleci.com/gh/browsermt/bergamot-translator/)
+> Quad4-maintained fork of the upstream [browsermt/bergamot-translator](https://github.com/browsermt/bergamot-translator) project.
 
 Bergamot translator provides a unified API for ([Marian NMT](https://marian-nmt.github.io/) framework based) neural machine translation functionality in accordance with the [Bergamot](https://browser.mt/) project that focuses on improving client-side machine translation in a web browser.
+
+This fork exists to keep the package, build tooling, and npm distribution current for downstream projects that depend on Bergamot, including [MeshChatX](https://github.com/Quad4-Software/meshchatx).
+
+## Packages
+
+- **npm:** `@quad4/bergamot-translator` (see [`wasm/module/README.md`](wasm/module/README.md)).
+- **PyPI:** `quad4-bergamot` (see [`bindings/python/README.md`](bindings/python/README.md)).
+
+## Status
+
+- Engine and submodules are updated to the latest public commits in the browsermt org.
+- GitHub Actions are pinned to known-good SHA hashes and run with least-privilege permissions.
+- WASM builds use Emscripten `3.1.8` (the version the Marian/Bergamot source is known to build with). Newer Emscripten majors are not verified.
+- This repository will be repointed to a Quad4 remote when the public fork is created.
 
 ## Build Instructions
 
 ### Build Natively
-Create a folder where you want to build all the artifacts (`build-native` in this case) and compile
+
+Create a folder where you want to build all the artifacts (`build-native` in this case) and compile.
 
 ```bash
 mkdir build-native
@@ -17,66 +32,74 @@ make -j2
 ```
 
 ### Build WASM
+
 #### Prerequisite
 
-Building on wasm requires Emscripten toolchain. It can be downloaded and installed using following instructions:
+Building on WASM requires the Emscripten toolchain. It can be downloaded and installed using following instructions.
 
-* Get the latest sdk: `git clone https://github.com/emscripten-core/emsdk.git`
-* Enter the cloned directory: `cd emsdk`
-* Install the sdk: `./emsdk install 3.1.8`
-* Activate the sdk: `./emsdk activate 3.1.8`
-* Activate path variables: `source ./emsdk_env.sh`
+```bash
+git clone https://github.com/emscripten-core/emsdk.git
+cd emsdk
+./emsdk install 3.1.8
+./emsdk activate 3.1.8
+source ./emsdk_env.sh
+```
 
-#### <a name="Compile"></a> Compile
+Or use the convenience script which does the same.
 
-To build a version that translates with higher speeds on Firefox Nightly browser, follow these instructions:
+```bash
+bash build-wasm.sh
+```
 
-   1. Create a folder where you want to build all the artifacts (`build-wasm` in this case) and compile
-       ```bash
-       mkdir build-wasm
-       cd build-wasm
-       emcmake cmake -DCOMPILE_WASM=on ../
-       emmake make -j2
-       ```
+#### Compile
 
-       The wasm artifacts (.js and .wasm files) will be available in the build directory ("build-wasm" in this case).
+To build a version that translates with higher speeds on Firefox Nightly browser, follow these instructions.
 
-   2. Patch generated artifacts to import GEMM library from a separate wasm module
-       ```bash
-       bash ../wasm/patch-artifacts-import-gemm-module.sh
-       ```
+1. Create a folder where you want to build all the artifacts and compile.
 
-To build a version that runs on all browsers (including Firefox Nightly) but translates slowly, follow these instructions:
+   ```bash
+   mkdir build-wasm
+   cd build-wasm
+   emcmake cmake -DCOMPILE_WASM=on ..
+   emmake make -j2
+   ```
 
-  1. Create a folder where you want to build all the artifacts (`build-wasm` in this case) and compile
-      ```bash
-      mkdir build-wasm
-      cd build-wasm
-      emcmake cmake -DCOMPILE_WASM=on ../
-      emmake make -j2
-      ```
+   The WASM artifacts (`.js` and `.wasm` files) will be available in the build directory.
 
-  2. Patch generated artifacts to import GEMM library from a separate wasm module
-       ```bash
-       bash ../wasm/patch-artifacts-import-gemm-module.sh
-       ```
+2. Patch generated artifacts to import the GEMM library from a separate WASM module.
+
+   ```bash
+   bash ../wasm/patch-artifacts-import-gemm-module.sh
+   ```
+
+To build a version that runs on all browsers (including Firefox Nightly) but translates slowly, follow the same steps with `-DWORMHOLE=off`.
+
+```bash
+emcmake cmake -DCOMPILE_WASM=on -DWORMHOLE=off ..
+emmake make -j2
+bash ../wasm/patch-artifacts-import-gemm-module.sh
+```
 
 #### Recompiling
-As long as you don't update any submodule, just follow [Compile](#Compile) steps.\
-If you update a submodule, execute following command in repository root folder before executing
-[Compile](#Compile) steps.
+
+As long as you do not update any submodule, just follow the compile steps.
+If you update a submodule, run this first.
+
 ```bash
 git submodule update --init --recursive
 ```
-
 
 ## How to use
 
 ### Using Native version
 
-The builds generate library that can be integrated to any project. All the public header files are specified in `src` folder.\
-A short example of how to use the APIs is provided in `app/bergamot.cpp` file.
+The builds generate a library that can be integrated into any project. All the public header files are specified in the `src` folder.
+A short example of how to use the APIs is provided in `app/bergamot.cpp`.
 
 ### Using WASM version
 
-Please follow the `README` inside the `wasm` folder of this repository that demonstrates how to use the translator in JavaScript.
+See the `README` inside the `wasm` folder for how to use the translator in JavaScript.
+
+## License
+
+MPL-2.0. See [LICENSE](LICENSE).

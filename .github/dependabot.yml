@@ -1,9 +1,28 @@
 version: 2
 
 updates:
-  # Maintain dependencies for Git Submodules
+  # Keep GitHub Actions pinned SHAs updated when new releases are published.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+
+  # Maintain dependencies for Git Submodules.
   - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
       interval: "daily"
 
+  # Maintain dependencies for the npm package.
+  - package-ecosystem: "npm"
+    directory: "/wasm/module"
+    schedule:
+      interval: "weekly"
+
+  # Maintain dependencies for the WASM test page.
+  - package-ecosystem: "npm"
+    directory: "/wasm/test_page"
+    schedule:
+      interval: "weekly"

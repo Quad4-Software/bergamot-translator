@@ -2,41 +2,43 @@ name: "Coding Style"
 
 on:
   push:
-    branches: [ main, ci-sandbox ]
+    branches: [main, ci-sandbox]
   pull_request:
-    branches: [ '**' ]
+    branches: ["**"]
+
+permissions:
+  contents: read
 
 jobs:
   clang-format:
-      name: "clang-format"
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-          with:
-            submodules: recursive
+    name: "clang-format and clang-tidy"
+    runs-on: ubuntu-latest
 
-        - name: Install dependencies
-          run: |
-            sudo apt-get update
-            sudo apt-get install -y build-essential cmake
-            sudo apt-get install -y clang-format clang-tidy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          submodules: recursive
 
-        - name: Run clang-format
-          run:
-              python3 run-clang-format.py --style file -r src wasm bindings/python
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake
+          sudo apt-get install -y clang-format clang-tidy
 
+      - name: Run clang-format
+        run: python3 run-clang-format.py --style file -r src wasm bindings/python
 
-        - name: Prepare build, compilation database etc.
-          run: |
-              mkdir -p build
-              cd build
-              cmake \
-                -DUSE_WASM_COMPATIBLE_SOURCE=off -DCMAKE_EXPORT_COMPILE_COMMANDS=on \
-                -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
-                ..
+      - name: Prepare build, compilation database
+        run: |
+          mkdir -p build
+          cd build
+          cmake \
+            -DUSE_WASM_COMPATIBLE_SOURCE=off -DCMAKE_EXPORT_COMPILE_COMMANDS=on \
+            -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+            ..
 
-        - name: Run clang-tidy
-          run: |
-              run-clang-tidy -p build "$PWD/src/.*"
-              run-clang-tidy -p build "$PWD/app/.*"
+      - name: Run clang-tidy
+        run: |
+          run-clang-tidy -p build "$PWD/src/.*"
+          run-clang-tidy -p build "$PWD/app/.*"

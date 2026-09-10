@@ -193,12 +193,12 @@ class build_py(_build_py):
 # The information here can also be placed in setup.cfg - better separation of
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
-    name="bergamot",
+    name="quad4-bergamot",
     version=version,
-    author="Jerin Philip",
-    author_email="jerinphilip@live.in",
-    url="https://github.com/browsermt/bergamot-translator/",
-    description="Translate text-content locally in your machine across langauges.",
+    author="Quad4 Software",
+    author_email="",
+    url="https://github.com/Quad4-Software/bergamot-translator/",
+    description="Translate text content locally across languages.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     ext_modules=[CMakeExtension("bergamot/_bergamot")],
@@ -206,10 +206,10 @@ setup(
     zip_safe=False,
     extras_require={"test": ["pytest>=6.0"]},
     license_files=("LICENSE",),
-    python_requires=">=3.6",
+    python_requires=">=3.9",
     packages=["bergamot"],
     package_dir={"bergamot": "bindings/python"},
-    install_requires=["requests", "pyyaml>=5.1", "appdirs"],
+    install_requires=["requests", "pyyaml>=5.1", "platformdirs"],
     entry_points={
         "console_scripts": [
             "bergamot = bergamot.__main__:main",
@@ -233,16 +233,16 @@ setup(
         # that you indicate you support Python 3. These classifiers are *not*
         # checked by 'pip install'. See instead 'python_requires' below.
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
         "Programming Language :: Python :: 3 :: Only",
     ],
     project_urls={
-        "Bug Reports": "https://github.com/browsermt/bergamot-translator/issues",
-        "Source": "https://github.com/browsermt/bergamot-translator/",
-        "Documentation": "https://browser.mt/docs/main/python.html",
+        "Bug Reports": "https://github.com/Quad4-Software/bergamot-translator/issues",
+        "Source": "https://github.com/Quad4-Software/bergamot-translator/",
+        "Documentation": "https://github.com/Quad4-Software/bergamot-translator#readme",
     },
 )

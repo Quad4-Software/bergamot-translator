@@ -36,4 +36,4 @@ done
 (cd $SCRIPT_ABSOLUTE_PATH;
 npm install;
 echo "Start httpserver";
-node bergamot-httpserver.js 80 1 0)
+node bergamot-httpserver.js 8080 1 0)

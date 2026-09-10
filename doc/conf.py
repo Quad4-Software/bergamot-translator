@@ -21,8 +21,8 @@ sys.path.insert(0, os.path.abspath("."))
 # -- Project information -----------------------------------------------------
 
 project = "Bergamot Translator"
-copyright = "2021-2022 Bergamot Translator Team"
-author = "Bergamot Translator Team"
+copyright = "2021-2025 Bergamot Translator Team and Quad4 Software"
+author = "Quad4 Software"
 
 # The full version, including alpha/beta/rc tags
 # TODO: add GitHub commit hash to the version
@@ -44,7 +44,7 @@ extensions = [
     "sphinx.ext.todo",
     "breathe",
     "exhale",
-    "recommonmark",
+    "myst_parser",
     "sphinx.ext.autodoc",
     "sphinxarg.ext",
 ]
@@ -78,7 +78,7 @@ html_static_path = ["_static"]
 html_css_files = ["css/custom.css"]
 
 # The base URL which points to the root of the HTML documentation
-html_baseurl = "https://browser.mt/docs"
+html_baseurl = "https://github.com/Quad4-Software/bergamot-translator"
 
 
 # -- Extension configuration -------------------------------------------------
@@ -111,16 +111,4 @@ exhale_args = {
 primary_domain = "cpp"
 highlight_language = "cpp"
 
-# A trick to include markdown files from outside the source directory using
-# 'mdinclude'. Warning: all other markdown files not included via 'mdinclude'
-# will be rendered using recommonmark as recommended by Sphinx
-from m2r import MdInclude
-
-
-def setup(app):
-    # from m2r to make `mdinclude` work
-    app.add_config_value("no_underscore_emphasis", False, "env")
-    app.add_config_value("m2r_parse_relative_links", False, "env")
-    app.add_config_value("m2r_anonymous_references", False, "env")
-    app.add_config_value("m2r_disable_inline_math", False, "env")
-    app.add_directive("mdinclude", MdInclude)
+# myst-parser handles all Markdown sources (.md files are parsed as MyST).

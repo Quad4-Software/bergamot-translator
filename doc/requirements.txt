@@ -1,9 +1,7 @@
-sphinx==2.4.4
-breathe==4.13.0
-Jinja2==3.0.3
-exhale
-sphinx_rtd_theme
-mistune<2.0.0
-recommonmark
-m2r
+sphinx==7.4.7
+breathe==4.35.0
+Jinja2>=3.1.4
+exhale==0.3.7
+sphinx-rtd-theme==2.0.0
+myst-parser==3.0.1
 sphinx-argparse

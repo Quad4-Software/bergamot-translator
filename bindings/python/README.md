@@ -1,4 +1,6 @@
-# bergamot-translator
+# quad4-bergamot
+
+Python bindings for the Bergamot translator.
 
 The [Bergamot project](https://browser.mt/) adds and improves client-side
 machine translation in a web browser.

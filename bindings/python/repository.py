@@ -7,7 +7,7 @@ from functools import partial
 from urllib.parse import urlparse
 
 import requests
-from appdirs import AppDirs
+from platformdirs import PlatformDirs
 
 from .typing_utils import URL, PathLike
 from .utils import download_resource, patch_marian_for_bergamot
@@ -54,14 +54,14 @@ class Repository(ABC):
 class TranslateLocallyLike(Repository):
     """
     This class implements Repository to fetch models from translateLocally.
-    AppDirs is used to standardize directories and further specialization
+    PlatformDirs is used to standardize directories and further specialization
     happens with translateLocally identifier.
     """
 
     def __init__(self, name, url):
         self.url = url
         self._name = name
-        appDir = AppDirs(APP)
+        appDir = PlatformDirs(APP)
         f = lambda *args: os.path.join(*args, self._name)
         self.dirs = {
             "cache": f(appDir.user_cache_dir),
