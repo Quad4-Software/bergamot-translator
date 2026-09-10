@@ -81,6 +81,7 @@ jobs:
           NDK=${{ env.ndk }}
           cmake -L \
               -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
               -DCMAKE_TOOLCHAIN_FILE=$NDK/build/cmake/android.toolchain.cmake \
               -DANDROID_ABI=${{ env.abi }} \
               -DANDROID_PLATFORM=android-${{ env.android_platform }} \

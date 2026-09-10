@@ -94,7 +94,7 @@ jobs:
         working-directory: ${{ github.workspace }}/build
         shell: powershell
         run: |
-          cmake .. -DCMAKE_BUILD_TYPE=Release -DUSE_STATIC_LIBS=ON -DVCPKG_TARGET_TRIPLET='x64-windows-static' `
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DUSE_STATIC_LIBS=ON -DVCPKG_TARGET_TRIPLET='x64-windows-static' `
                 -DCMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake" `
                 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache `
                 -DCMAKE_C_COMPILER_LAUNCHER=ccache

@@ -206,7 +206,7 @@ jobs:
         run: |
           mkdir -p build-wasm
           cd build-wasm
-          emcmake cmake -DCOMPILE_WASM=on ..
+          emcmake cmake -DCOMPILE_WASM=on -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
 
       - name: Compile
         working-directory: build-wasm
