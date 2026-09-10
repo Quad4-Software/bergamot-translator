@@ -27,7 +27,7 @@ TranslationModel::TranslationModel(const Config &options, MemoryBundle &&memory 
   ABORT_IF(replicas == 0, "At least one replica needs to be created.");
   backend_.resize(replicas);
 
-  // Try to load shortlist from memory-bundle. If not available, try to load from options_;
+  // Try to load shortlist from memory-bundle. If not available, try to load from options.
 
   int srcIdx = 0, trgIdx = 1;
   // vocabs_->sources().front() is invoked as we currently only support one source vocab

@@ -154,10 +154,10 @@ struct AnnotatedText {
                               std::vector<string_view>::iterator tokens_end, const char *sentence_begin);
 
   /// Returns the number of sentences in the annotation structure.
-  const size_t numSentences() const { return annotation.numSentences(); }
+  size_t numSentences() const { return annotation.numSentences(); }
 
   /// Returns number of words in the sentece identified by sentenceIdx.
-  const size_t numWords(size_t sentenceIdx) const { return annotation.numWords(sentenceIdx); }
+  size_t numWords(size_t sentenceIdx) const { return annotation.numWords(sentenceIdx); }
 
   /// Returns a string_view representing wordIdx in sentenceIdx
   string_view word(size_t sentenceIdx, size_t wordIdx) const {

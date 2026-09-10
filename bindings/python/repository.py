@@ -3,7 +3,6 @@ import os
 import tarfile
 import typing as t
 from abc import ABC, abstractmethod
-from functools import partial
 from urllib.parse import urlparse
 
 import requests
@@ -142,9 +141,7 @@ class TranslateLocallyLike(Repository):
                 abs_directory = os.path.abspath(directory)
                 abs_target = os.path.abspath(target)
 
-                prefix = os.path.commonprefix([abs_directory, abs_target])
-
-                return prefix == abs_directory
+                return os.path.commonpath([abs_directory, abs_target]) == abs_directory
 
             def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
                 for member in tar.getmembers():
@@ -152,7 +149,9 @@ class TranslateLocallyLike(Repository):
                     if not is_within_directory(path, member_path):
                         raise Exception("Attempted Path Traversal in Tar File")
 
-                tar.extractall(path, members, numeric_owner=numeric_owner)
+                tar.extractall(
+                    path, members, numeric_owner=numeric_owner, filter="data"
+                )
 
             safe_extract(model_archive, self.dirs["models"])
             fprefix = self._archive_name_without_extension(model["url"])

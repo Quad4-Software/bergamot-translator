@@ -4,6 +4,7 @@
     "@quad4/bergamot-translator": "file:../module",
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "nocache": "^4.0.0"
   },
   "config": {

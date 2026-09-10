@@ -37,7 +37,7 @@ bool validateBinaryModel(const AlignedMemory& model, uint64_t fileSize) {
       sizeof(uint64_t) * 2;  // We keep track of how much memory we would need if we have a complete file
   uint64_t numHeaders;
   if (fileSize >= memoryNeeded) {  // We have enough filesize to fetch the headers.
-    uint64_t binaryFileVersion = *get<uint64_t>(current);
+    get<uint64_t>(current);  // advance past binary file version, which is not validated
     numHeaders = *get<uint64_t>(current);  // number of item headers that follow
   } else {
     return false;

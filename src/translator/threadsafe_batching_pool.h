@@ -54,7 +54,7 @@ class ThreadsafeBatchingPool {
  private:
   BatchingPoolType backend_;
 
-  // Number of sentences in backend_;
+  // Number of sentences in the backend pool.
   size_t enqueued_;
 
   // Are we shutting down?

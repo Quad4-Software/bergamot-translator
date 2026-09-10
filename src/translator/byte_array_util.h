@@ -1,3 +1,6 @@
+#ifndef SRC_BERGAMOT_BYTE_ARRAY_UTIL_H_
+#define SRC_BERGAMOT_BYTE_ARRAY_UTIL_H_
+
 #include "definitions.h"
 #include "marian.h"
 
@@ -16,3 +19,5 @@ bool validateBinaryModel(const AlignedMemory& model, uint64_t fileSize);
 MemoryBundle getMemoryBundleFromConfig(marian::Ptr<marian::Options> options);
 }  // namespace bergamot
 }  // namespace marian
+
+#endif  // SRC_BERGAMOT_BYTE_ARRAY_UTIL_H_

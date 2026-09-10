@@ -5,6 +5,9 @@
 //|
 //| (C) Andrew Fedoniouk @ terrainformatica.com
 //|
+#ifndef SRC_BERGAMOT_XH_SCANNER_H_
+#define SRC_BERGAMOT_XH_SCANNER_H_
+
 #include <cassert>
 #include <cstring>
 #include <string_view>
@@ -32,7 +35,7 @@ class Scanner {
  public:
   enum TokenType {
     TT_ERROR = -1,
-    TT_EOF = 0,
+    TT_EOF,
 
     TT_TAG_START,                     // <tag ...
                                       //     ^-- happens here
@@ -146,3 +149,5 @@ class Scanner {
   bool gotTail_;  // aux flag used in scanComment, scanSpecial, scanProcessingInstruction
 };
 }  // namespace markup
+
+#endif  // SRC_BERGAMOT_XH_SCANNER_H_

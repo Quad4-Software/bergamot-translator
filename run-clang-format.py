@@ -28,7 +28,7 @@ from functools import partial
 try:
     from subprocess import DEVNULL  # py3k
 except ImportError:
-    DEVNULL = open(os.devnull, "wb")
+    DEVNULL = os.open(os.devnull, os.O_WRONLY)
 
 
 DEFAULT_EXTENSIONS = 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
@@ -355,7 +355,7 @@ def main():
         extensions=args.extensions.split(','))
 
     if not files:
-        return
+        return retcode
 
     njobs = args.j
     if njobs == 0:

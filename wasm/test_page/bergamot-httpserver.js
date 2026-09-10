@@ -1,6 +1,7 @@
 const http = require('http');
 const https = require('https')
 const express = require('express');
+const rateLimit = require('express-rate-limit');
 const app = express();
 const server = http.createServer(app);
 const fs = require('fs');
@@ -8,6 +9,8 @@ const url = require('url');
 const nocache = require('nocache');
 const cors = require('cors');
 const path = require('path');
+
+const ROOT = __dirname;
 
 let port = 8000;
 if (process.argv[2]) {
@@ -26,6 +29,12 @@ if (process.argv[4]) {
 
 app.use(cors())
 app.use(nocache());
+app.use(rateLimit({
+    windowMs: 60 * 1000,
+    limit: 600,
+    standardHeaders: true,
+    legacyHeaders: false,
+}));
 
 app.get('/', cors(), function(req, res) {
     if (!req.secure && skipssl != 1) {
@@ -45,10 +54,15 @@ app.get('/*.*' , cors(), function(req, res) {
 
 function serveFile(res, pathName, mime) {
     mime = mime || 'text/html';
-    fs.readFile(__dirname + '/' + pathName, function (err, data) {
+    const filePath = path.resolve(ROOT, '.' + pathName);
+    if (filePath !== ROOT && !filePath.startsWith(ROOT + path.sep)) {
+        res.writeHead(403, {"Content-Type": "text/plain"});
+        return res.end('Forbidden');
+    }
+    fs.readFile(filePath, function (err, data) {
         if (err) {
             res.writeHead(500, {"Content-Type": "text/plain"});
-            return res.end('Error loading ' + pathName + " with Error: " + err);
+            return res.end('Error loading file with Error: ' + err);
         }
         res.header('Cross-Origin-Embedder-Policy','require-corp');
         res.header('Cross-Origin-Opener-Policy','same-origin');

@@ -14,7 +14,7 @@ void ResponseBuilder::buildAlignments(Histories &histories, Response &response) 
     // TODO(jerin): Change hardcode of nBest = 1
     NBestList onebest = history->nBest(1);
 
-    Result result = onebest[0];  // Expecting only one result;
+    Result result = onebest[0];  // Expecting only one result
     Words words = std::get<0>(result);
     auto hyp = std::get<1>(result);
     auto softAlignment = hyp->tracebackAlignment();
@@ -33,7 +33,7 @@ void ResponseBuilder::buildTranslatedText(Histories &histories, Response &respon
     auto &history = histories[sentenceIdx];
     NBestList onebest = history->nBest(1);
 
-    Result result = onebest[0];  // Expecting only one result;
+    Result result = onebest[0];  // Expecting only one result
     Words words = std::get<0>(result);
 
     std::string decoded;

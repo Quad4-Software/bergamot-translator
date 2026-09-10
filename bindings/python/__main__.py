@@ -1,6 +1,4 @@
-import argparse
 import sys
-from argparse import ArgumentParser
 
 from .cmds import CMDS, make_parser
 

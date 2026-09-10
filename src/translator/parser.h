@@ -60,7 +60,7 @@ class ConfigParser {
     addSpecialOptions(app_);
     CLIConfig<Service>::addOptions(app_, config_, multiOpMode);
   };
-  void parseArgs(int argc, char *argv[]) {
+  void parseArgs(int argc, char **argv) {
     try {
       app_.parse(argc, argv);
       handleSpecialOptions();

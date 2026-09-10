@@ -28,15 +28,8 @@ void encodeEntities(marian::string_view const &input, std::string &output) {
       case '>':
         output.append("&gt;");
         break;
-      // case ???:
-      //   output.append("&nbsp;");
-      //   break;
-      // case '"':
-      //   output.append("&quot;");
-      //   break;
-      // case '\'':
-      //   output.append("&apos;");
-      //   break;
+      // Other entities such as &nbsp; &quot; and &apos; are deliberately not
+      // escaped here.
       default:
         output.push_back(it);
         break;

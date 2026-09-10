@@ -8,12 +8,6 @@ function $$(selector) {
   return document.querySelectorAll(selector);
 }
 
-function encodeHTML(text) {
-  const div = document.createElement('div');
-  div.appendChild(document.createTextNode(text));
-  return div.innerHTML;
-}
-
 function addQualityIndicators() {
   $$('#output [x-bergamot-sentence-score]').forEach(el => {
     // The threshold is ln(0.5) (https://github.com/browsermt/bergamot-translator/pull/370#issuecomment-1058123399)
@@ -191,7 +185,7 @@ async function main() {
   })
 
   // Simple WYSIWYG controls
-  const editor = new Editor($('#input'));
+  new Editor($('#input'));
 
   // Translate on any change
   $('#input').addEventListener('input', translate);

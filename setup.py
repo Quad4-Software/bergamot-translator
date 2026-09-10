@@ -4,7 +4,7 @@ import re
 import subprocess
 import sys
 
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
 from setuptools.command.build_py import build_py as _build_py
 
@@ -83,6 +83,7 @@ class CMakeBuild(build_ext):
 
                     cmake_args += ["-GNinja"]
                 except ImportError:
+                    # ninja is optional, fall back to the default generator.
                     pass
 
         else:

@@ -162,7 +162,7 @@ async function onRuntimeInitialized() {
     const translation = output.get(i).getTranslatedText();
 
     // Print raw translation for inspection.
-    console.log(translation)
+    console.log(translation);
   }
 
   // Clean-up: unlike the objects in JavaScript, the objects in the WASM

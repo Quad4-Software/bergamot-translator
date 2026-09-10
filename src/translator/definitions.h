@@ -38,7 +38,7 @@ struct MemoryBundle {
 struct ByteRange {
   size_t begin;
   size_t end;
-  const size_t size() const { return end - begin; }
+  size_t size() const { return end - begin; }
   bool operator==(ByteRange other) const { return begin == other.begin && end == other.end; }
 };
 
@@ -48,7 +48,7 @@ struct ByteRange {
 struct SubwordRange {
   size_t begin;
   size_t end;
-  const size_t size() const { return end - begin; }
+  size_t size() const { return end - begin; }
   bool operator==(SubwordRange other) const { return begin == other.begin && end == other.end; }
 };
 

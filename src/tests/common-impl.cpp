@@ -14,7 +14,7 @@ Response Bridge<BlockingService>::translate(BlockingService &service, std::share
 
 Response Bridge<AsyncService>::translate(AsyncService &service, std::shared_ptr<TranslationModel> &model,
                                          std::string &&source, const ResponseOptions &responseOptions) {
-  // downgrade to blocking via promise, future, wait and return response;
+  // downgrade to blocking via promise, future, wait and return response
   std::promise<Response> responsePromise;
   std::future<Response> responseFuture = responsePromise.get_future();
 

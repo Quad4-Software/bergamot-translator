@@ -41,7 +41,7 @@ struct Response {
   /// text of into sentences are handled internally, and this information can be
   /// used to iterate through meaningful units of translation for which
   /// alignment and quality information are available.
-  const size_t size() const { return source.numSentences(); }
+  size_t size() const { return source.numSentences(); }
 
   /// source text and annotations of (sub-)words and sentences.
   AnnotatedText source;
