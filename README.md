@@ -8,19 +8,21 @@ This fork exists to keep the package, build tooling, and npm distribution curren
 
 ## Packages
 
-This repository does not publish to GitHub Packages.
-
-CI builds these artifacts on every main branch push and every v*.*.* tag:
+CI builds these artifacts on every main branch push, every v*.*.* tag, and on manual runs:
 
 - Python wheels for the package quad4-bergamot.
-- the npm package @quad4/bergamot-translator and its WASM worker files.
+- The npm package @quad4/bergamot-translator and its WASM worker files.
 
-On a version tag the workflow also attempts to:
+On a version tag the release workflow runs the build and then:
 
-- publish the npm package to https://registry.npmjs.org using the NPM_TOKEN secret.
-- publish the Python wheel to PyPI using trusted publishing.
+- Creates a GitHub Release with the wheels and WASM files.
+- Attempts to publish the npm package to https://registry.npmjs.org using the NPM_TOKEN secret.
+- Attempts to publish the Python wheel to PyPI using trusted publishing.
+- Publishes the package to GitHub Packages as @quad4-software/bergamot-translator.
 
-Both publishing steps need an npm or PyPI account and token. Until those are set up, the wheels and WASM files are only available as GitHub Release assets.
+Publishing to npm, PyPI, and GitHub Packages needs the matching credentials. GitHub Packages uses the built-in GITHUB_TOKEN. PyPI uses trusted publishing. npm uses NPM_TOKEN.
+
+Every workflow can also be triggered manually from the Actions tab.
 
 ## Status
 

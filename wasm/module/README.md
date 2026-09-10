@@ -1,7 +1,13 @@
 # Installation
 
-The package is built by CI but not yet published to npm. Install it from a local
-build for now.
+The package is built by CI and published to GitHub Packages as
+`@quad4-software/bergamot-translator`. It is not yet on the public npm registry.
+
+```bash
+npm install @quad4-software/bergamot-translator --registry https://npm.pkg.github.com
+```
+
+Or install it from a local build:
 
 ```bash
 npm install /path/to/wasm/module

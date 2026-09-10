@@ -1,0 +1,55 @@
+name: "Publish to GitHub Packages"
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        description: "Tag to publish from"
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to publish from"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Publish npm package to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download worker assets from release
+        run: |
+          gh release download "${{ inputs.tag }}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --pattern "bergamot-translator-worker.js" \
+            --pattern "bergamot-translator-worker.wasm" \
+            --dir wasm/module/worker
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup nodejs for GitHub Packages
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          registry-url: "https://npm.pkg.github.com"
+          scope: "quad4-software"
+
+      - name: Publish to GitHub Packages
+        working-directory: wasm/module
+        run: |
+          tmp=$(mktemp)
+          jq '.name = "@quad4-software/bergamot-translator" | .publishConfig = {"registry": "https://npm.pkg.github.com"}' package.json > "$tmp" && mv "$tmp" package.json
+          npm publish --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
