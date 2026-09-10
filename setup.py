@@ -39,8 +39,10 @@ class CMakeBuild(build_ext):
 
         import sysconfig
 
-        python_lib = os.path.join(sysconfig.get_config_var("LIBPL"), sysconfig.get_config_var("LDLIBRARY"))
-        python_inc = sysconfig.get_config_var("INCLUDEPY")
+        libpl = sysconfig.get_config_var("LIBPL") or ""
+        ldlibrary = sysconfig.get_config_var("LDLIBRARY") or ""
+        python_lib = os.path.join(libpl, ldlibrary)
+        python_inc = sysconfig.get_config_var("INCLUDEPY") or ""
 
         # CMake lets you override the generator - we need to check this.
         # Can be set with Conda-Build, for example.
@@ -53,8 +55,12 @@ class CMakeBuild(build_ext):
         cmake_args = [
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
-            f"-DPython_LIBRARY={python_lib}",
-            f"-DPython_INCLUDE_DIR={python_inc}",
+        ]
+        if os.path.isfile(python_lib):
+            cmake_args.append(f"-DPython_LIBRARY={python_lib}")
+        if os.path.isdir(python_inc):
+            cmake_args.append(f"-DPython_INCLUDE_DIR={python_inc}")
+        cmake_args += [
             f"-DCMAKE_BUILD_TYPE={cfg}",  # not used on MSVC, but no harm
             f"-DCOMPILE_PYTHON=ON",
             f"-DSSPLIT_USE_INTERNAL_PCRE2=ON",
