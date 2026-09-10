@@ -6,31 +6,6 @@ Bergamot translator provides a unified API for ([Marian NMT](https://marian-nmt.
 
 This fork exists to keep the package, build tooling, and npm distribution current for downstream projects that depend on Bergamot, including [MeshChatX](https://github.com/Quad4-Software/meshchatx).
 
-## Packages
-
-CI builds these artifacts on every main branch push, every v*.*.* tag, and on manual runs:
-
-- Python wheels for the package quad4-bergamot.
-- The npm package @quad4/bergamot-translator and its WASM worker files.
-
-On a version tag the release workflow runs the build and then:
-
-- Creates a GitHub Release with the wheels and WASM files.
-- Attempts to publish the npm package to https://registry.npmjs.org using the NPM_TOKEN secret.
-- Attempts to publish the Python wheel to PyPI using trusted publishing.
-- Publishes the package to GitHub Packages as @quad4-software/bergamot-translator.
-
-Publishing to npm, PyPI, and GitHub Packages needs the matching credentials. GitHub Packages uses the built-in GITHUB_TOKEN. PyPI uses trusted publishing. npm uses NPM_TOKEN.
-
-Every workflow can also be triggered manually from the Actions tab.
-
-## Status
-
-- Engine and submodules are updated to the latest public commits in the browsermt org.
-- GitHub Actions are pinned to known-good SHA hashes and run with least-privilege permissions.
-- WASM builds use Emscripten `3.1.8` (the version the Marian/Bergamot source is known to build with). Newer Emscripten majors are not verified.
-- This repository will be repointed to a Quad4 remote when the public fork is created.
-
 ## Build Instructions
 
 ### Build Natively
