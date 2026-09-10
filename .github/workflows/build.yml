@@ -91,13 +91,15 @@ jobs:
             CCACHE_BASEDIR=${{ env.ccache_basedir }}
             MACOSX_DEPLOYMENT_TARGET=10.9
             CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DCBLAS_LIBRARIES=/usr/local/opt/openblas/lib/libopenblas.dylib -DCBLAS_INCLUDE_DIR=/usr/local/opt/openblas/include
-          CIBW_BEFORE_BUILD_LINUX: |
+          CIBW_BEFORE_ALL_LINUX: |
+            pip install cmake==3.31.6
             yum install -y ccache
             yum --enablerepo=powertools install -y openblas-devel
             chmod -R a+rwx /host/${{ env.ccache_dir }}
             ccache -s
             ccache -z
-          CIBW_BEFORE_BUILD_MACOS: |
+          CIBW_BEFORE_ALL_MACOS: |
+            pip install cmake==3.31.6
             brew install openblas protobuf ccache boost pybind11
             chmod -R a+rwx ${{ env.ccache_dir }}
             ccache -s
