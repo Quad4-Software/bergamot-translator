@@ -3,7 +3,7 @@
   "dependencies": {
     "@quad4/bergamot-translator": "file:../module",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "express": "^5.2.1",
     "nocache": "^2.1.0"
   },
   "config": {
