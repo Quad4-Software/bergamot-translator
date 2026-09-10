@@ -55,7 +55,7 @@ app.get('/*.*' , cors(), function(req, res) {
 function serveFile(res, pathName, mime) {
     mime = mime || 'text/html';
     const filePath = path.resolve(ROOT, '.' + pathName);
-    if (filePath !== ROOT && !filePath.startsWith(ROOT + path.sep)) {
+    if (!filePath.startsWith(ROOT + path.sep)) {
         res.writeHead(403, {"Content-Type": "text/plain"});
         return res.end('Forbidden');
     }

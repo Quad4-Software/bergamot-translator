@@ -24,11 +24,7 @@ import sys
 import traceback
 
 from functools import partial
-
-try:
-    from subprocess import DEVNULL  # py3k
-except ImportError:
-    DEVNULL = os.open(os.devnull, os.O_WRONLY)
+from subprocess import DEVNULL
 
 
 DEFAULT_EXTENSIONS = 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
