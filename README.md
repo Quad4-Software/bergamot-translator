@@ -8,8 +8,19 @@ This fork exists to keep the package, build tooling, and npm distribution curren
 
 ## Packages
 
-- **npm:** `@quad4/bergamot-translator` (see [`wasm/module/README.md`](wasm/module/README.md)).
-- **PyPI:** `quad4-bergamot` (see [`bindings/python/README.md`](bindings/python/README.md)).
+This repository does not publish to GitHub Packages.
+
+CI builds these artifacts on every main branch push and every v*.*.* tag:
+
+- Python wheels for the package quad4-bergamot.
+- the npm package @quad4/bergamot-translator and its WASM worker files.
+
+On a version tag the workflow also attempts to:
+
+- publish the npm package to https://registry.npmjs.org using the NPM_TOKEN secret.
+- publish the Python wheel to PyPI using trusted publishing.
+
+Both publishing steps need an npm or PyPI account and token. Until those are set up, the wheels and WASM files are only available as GitHub Release assets.
 
 ## Status
 

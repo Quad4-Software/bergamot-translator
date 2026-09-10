@@ -4,7 +4,7 @@ import re
 import subprocess
 import sys
 
-from setuptools import Command, Extension, find_packages, setup
+from setuptools import Extension, find_packages, setup
 from setuptools.command.build_ext import build_ext
 from setuptools.command.build_py import build_py as _build_py
 
@@ -146,42 +146,6 @@ with open(os.path.join(here, "BERGAMOT_VERSION")) as f:
     suffix = os.environ.get("PYTHON_LOCAL_VERSION_IDENTIFIER", None)
     if suffix:
         version = "{}+{}".format(version, suffix)
-
-
-class UploadCommand(Command):
-    """Support setup.py upload."""
-
-    description = "Build and publish the package."
-    user_options = []
-
-    @staticmethod
-    def status(s):
-        """Prints things in bold."""
-        print("\033[1m{0}\033[0m".format(s))
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        try:
-            self.status("Removing previous builds…")
-            rmtree(os.path.join(here, "dist"))
-        except OSError:
-            pass
-
-        self.status("Building Source and Wheel (universal) distribution…")
-        os.system("{0} setup.py sdist bdist_wheel --universal".format(sys.executable))
-
-        self.status("Pushing git tags…")
-        os.system("git push --tags")
-
-        self.status("Uploading the package to PyPI via Twine…")
-        os.system("twine upload dist/*")
-
-        sys.exit()
 
 
 class build_py(_build_py):
