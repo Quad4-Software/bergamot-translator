@@ -39,9 +39,25 @@ class CMakeBuild(build_ext):
 
         import sysconfig
 
-        libpl = sysconfig.get_config_var("LIBPL") or ""
-        ldlibrary = sysconfig.get_config_var("LDLIBRARY") or ""
-        python_lib = os.path.join(libpl, ldlibrary)
+        # libpython lives in LIBDIR for shared builds and in LIBPL (the
+        # config-* dir) for static builds; try both layouts.
+        libdirs = [
+            sysconfig.get_config_var("LIBDIR"),
+            sysconfig.get_config_var("LIBPL"),
+        ]
+        libnames = [
+            sysconfig.get_config_var("LDLIBRARY"),
+            sysconfig.get_config_var("INSTSONAME"),
+        ]
+        python_lib = next(
+            (
+                os.path.join(d, n)
+                for d in libdirs
+                for n in libnames
+                if d and n and os.path.isfile(os.path.join(d, n))
+            ),
+            None,
+        )
         python_inc = sysconfig.get_config_var("INCLUDEPY") or ""
 
         # CMake lets you override the generator - we need to check this.
@@ -56,7 +72,7 @@ class CMakeBuild(build_ext):
             f"-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={extdir}",
             f"-DPYTHON_EXECUTABLE={sys.executable}",
         ]
-        if os.path.isfile(python_lib):
+        if python_lib:
             cmake_args.append(f"-DPython_LIBRARY={python_lib}")
         if os.path.isdir(python_inc):
             cmake_args.append(f"-DPython_INCLUDE_DIR={python_inc}")
