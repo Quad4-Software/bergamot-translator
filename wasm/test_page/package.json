@@ -2,7 +2,7 @@
   "name": "test_page",
   "dependencies": {
     "@quad4/bergamot-translator": "file:../module",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "express": "^4.21.2",
     "nocache": "^2.1.0"
   },
