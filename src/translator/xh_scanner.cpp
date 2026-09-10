@@ -38,7 +38,7 @@ bool operator==(markup::string_ref const &str, const Char_t (&str2)[Len]) {
 }
 
 template <size_t N>
-constexpr size_t length(char const (&/*unused*/)[N]) {
+constexpr size_t length(char const (& /*unused*/)[N]) {
   return N - 1;
 }
 
