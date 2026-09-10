@@ -1,4 +1,4 @@
-find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
+find_package(Python COMPONENTS Interpreter Development.Module Development.Embed REQUIRED)
 
 message("Using Python: " ${Python_EXECUTABLE})
 
