@@ -1,7 +1,10 @@
 # Installation
 
+The package is built by CI but not yet published to npm. Install it from a local
+build for now.
+
 ```bash
-npm install @quad4/bergamot-translator
+npm install /path/to/wasm/module
 ```
 
 # Quick start
