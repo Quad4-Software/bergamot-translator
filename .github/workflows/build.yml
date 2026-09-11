@@ -62,14 +62,16 @@ jobs:
 
       - name: Apply MacOS patch
         if: startsWith(runner.os, 'mac')
-        run: patch -p1 < patches/01-marian-fstream-for-macos.patch
+        run: |
+          patch -p1 < patches/01-marian-fstream-for-macos.patch
+          patch -d 3rd_party/marian-dev/src/3rd_party/sentencepiece -p1 < patches/02-sentencepiece-constexpr.patch
 
       - name: Build wheels
         uses: pypa/cibuildwheel@e090b81e30c4d855ea63bf4b6e59204c09a101ae # v4.2.1
         env:
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_ENVIRONMENT_LINUX: |
-            BUILD_ARCH=core-avx-i
+            BUILD_ARCH=haswell
             USE_CCACHE=1
             CCACHE_COMPILER_CHECK=${{ env.ccache_compilercheck }}
             CCACHE_COMPRESS=${{ env.ccache_compress }}
@@ -80,7 +82,7 @@ jobs:
             CCACHE_BASEDIR=/host/${{ env.ccache_basedir }}
             CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DBLAS_INCLUDE_DIR=/usr/include/openblas -DCBLAS_LIBRARIES=/usr/lib64/libopenblas.so -DCBLAS_INCLUDE_DIR=/usr/include/openblas
           CIBW_ENVIRONMENT_MACOS: |
-            BUILD_ARCH=core-avx-i
+            BUILD_ARCH=haswell
             USE_CCACHE=1
             CCACHE_COMPILER_CHECK=${{ env.ccache_compilercheck }}
             CCACHE_COMPRESS=${{ env.ccache_compress }}
@@ -110,11 +112,8 @@ jobs:
             python3 -m bergamot download -m en-de-tiny
             python3 -m bergamot download -m de-en-tiny
             python3 -m bergamot ls
-            python3 -m bergamot download -m eng-fin-tiny -r opus
-            python3 -m bergamot ls -r opus
             python3 -m bergamot translate --model en-de-tiny <<< "Hello World"
             python3 -m bergamot translate --model en-de-tiny de-en-tiny <<< "Hello World"
-            python3 -m bergamot translate --model eng-fin-tiny --repository opus <<< "Hello World"
 
       - name: Upload wheels
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

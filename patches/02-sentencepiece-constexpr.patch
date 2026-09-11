@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Ivan <ivan@quad4.io>
+Date: Thu, 10 Sep 2026 00:00:00 +0000
+Subject: [PATCH] Work around newer clang constexpr enum range check
+
+clang on macOS rejects a constexpr cast to an enum value outside the
+enumerator range. Make the sentinel const instead of constexpr.
+---
+ src/trainer_interface.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/trainer_interface.cc b/src/trainer_interface.cc
+index ae41b77..1234567 100644
+--- a/src/trainer_interface.cc
++++ b/src/trainer_interface.cc
+@@ -208,7 +208,7 @@ bool TrainerInterface::IsValidSentencePiece(
+     return false;
+   }
+ 
+-  constexpr unicode_script::ScriptType kAnyType =
++  const unicode_script::ScriptType kAnyType =
+       static_cast<unicode_script::ScriptType>(-1);
+ 
+   auto is_number = [](char32 c) { return (c >= 0x30 && c <= 0x39); };

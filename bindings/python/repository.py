@@ -179,8 +179,10 @@ class TranslateLocallyLike(Repository):
     def _archive_name_without_extension(self, url: URL):
         o = urlparse(url)
         fname = os.path.basename(o.path)  # something tar.gz.
-        fname_without_extension = ".".join(fname.split(".")[:3])
-        return fname_without_extension
+        for suffix in (".tar.gz", ".tgz", ".tar"):
+            if fname.endswith(suffix):
+                return fname[: -len(suffix)]
+        return os.path.splitext(fname)[0]
 
 
 class Aggregator:
