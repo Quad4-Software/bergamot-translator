@@ -112,8 +112,7 @@ class TranslateLocallyLike(Repository):
         codes = []
         for model in self.data["models"]:
             if filter_downloaded:
-                fprefix = self._archive_name_without_extension(model["url"])
-                model_dir = os.path.join(self.dirs["models"], fprefix)
+                model_dir = os.path.join(self.dirs["models"], model["code"])
                 if os.path.exists(model_dir):
                     codes.append(model["code"])
             else:
@@ -122,8 +121,7 @@ class TranslateLocallyLike(Repository):
 
     def modelConfigPath(self, model_identifier: str) -> str:
         model = self.model(model_identifier)
-        fprefix = self._archive_name_without_extension(model["url"])
-        model_dir = os.path.join(self.dirs["models"], fprefix)
+        model_dir = os.path.join(self.dirs["models"], model["code"])
         return os.path.join(model_dir, "config.bergamot.yml")
 
     def model(self, model_identifier: str) -> t.Any:
