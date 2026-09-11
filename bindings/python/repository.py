@@ -1,5 +1,6 @@
 import json
 import os
+import posixpath
 import tarfile
 import typing as t
 from abc import ABC, abstractmethod
@@ -153,9 +154,19 @@ class TranslateLocallyLike(Repository):
                     path, members, numeric_owner=numeric_owner, filter="data"
                 )
 
+            # Model archives unpack into a top-level directory that does not
+            # necessarily match the archive file name (version and checksum
+            # suffixes may be dropped). Prefer the actual top-level directory
+            # and fall back to the name derived from the URL.
+            top_dirs = {
+                posixpath.normpath(member.name).split("/")[0]
+                for member in model_archive.getmembers()
+            } - {".", ".."}
+
             safe_extract(model_archive, self.dirs["models"])
             fprefix = self._archive_name_without_extension(model["url"])
-            model_dir = os.path.join(self.dirs["models"], fprefix)
+            dirname = top_dirs.pop() if len(top_dirs) == 1 else fprefix
+            model_dir = os.path.join(self.dirs["models"], dirname)
             symlink = os.path.join(self.dirs["models"], model["code"])
 
             print(
