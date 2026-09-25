@@ -1,6 +1,6 @@
 # Bergamot Translator
 
-> Quad4-maintained fork of the upstream [browsermt/bergamot-translator](https://github.com/browsermt/bergamot-translator) project.
+> Quad4-maintained fork of the upstream [browsermt/bergamot-translator](https://github.com/browsermt/bergamot-translator) project. We use open-weight LLM models locally and when needed from a zero data retention inference provider. All code reviewed, scrutinized, and validated by a human developer.
 
 Bergamot translator provides a unified API for ([Marian NMT](https://marian-nmt.github.io/) framework based) neural machine translation functionality in accordance with the [Bergamot](https://browser.mt/) project that focuses on improving client-side machine translation in a web browser.
 
