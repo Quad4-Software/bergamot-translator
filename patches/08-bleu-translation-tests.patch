@@ -1,0 +1,74 @@
+diff --git a/bergamot-translator-tests/tests/async/test_html_translation.sh b/bergamot-translator-tests/tests/async/test_html_translation.sh
+index 0d230b0..e595380 100644
+--- a/bergamot-translator-tests/tests/async/test_html_translation.sh
++++ b/bergamot-translator-tests/tests/async/test_html_translation.sh
+@@ -17,6 +17,6 @@ ${BRT_MARIAN}/tests/async --bergamot-mode test-html-translation ${BRT_ASYNC_ARGS
+ if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
+     python3 $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED}
+ else
+-    $BRT_TOOLS/diff.sh $OUTFILE ${EXPECTED} 
++    $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED} 
+ fi
+ exit 0
+diff --git a/bergamot-translator-tests/tests/async/test_response_target_sentences.sh b/bergamot-translator-tests/tests/async/test_response_target_sentences.sh
+index 9a31f7f..f52106b 100644
+--- a/bergamot-translator-tests/tests/async/test_response_target_sentences.sh
++++ b/bergamot-translator-tests/tests/async/test_response_target_sentences.sh
+@@ -17,6 +17,6 @@ ${BRT_MARIAN}/tests/async --bergamot-mode test-response-target-sentences ${BRT_A
+ if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
+     python3 $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED}
+ else
+-    $BRT_TOOLS/diff.sh $OUTFILE ${EXPECTED} 
++    $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED} 
+ fi
+ exit 0
+diff --git a/bergamot-translator-tests/tests/blocking/test_html_translation.sh b/bergamot-translator-tests/tests/blocking/test_html_translation.sh
+index 5d4392b..ebee92c 100644
+--- a/bergamot-translator-tests/tests/blocking/test_html_translation.sh
++++ b/bergamot-translator-tests/tests/blocking/test_html_translation.sh
+@@ -17,6 +17,6 @@ ${BRT_MARIAN}/tests/blocking --bergamot-mode test-html-translation ${BRT_BLOCKIN
+ if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
+     python3 $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED}
+ else
+-    $BRT_TOOLS/diff.sh $OUTFILE ${EXPECTED} 
++    $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED} 
+ fi
+ exit 0
+diff --git a/bergamot-translator-tests/tests/blocking/test_response_target_sentences.sh b/bergamot-translator-tests/tests/blocking/test_response_target_sentences.sh
+index 2467874..14390f8 100644
+--- a/bergamot-translator-tests/tests/blocking/test_response_target_sentences.sh
++++ b/bergamot-translator-tests/tests/blocking/test_response_target_sentences.sh
+@@ -17,6 +17,6 @@ ${BRT_MARIAN}/tests/blocking --bergamot-mode test-response-target-sentences ${BR
+ if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
+     python3 $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED}
+ else
+-    $BRT_TOOLS/diff.sh $OUTFILE ${EXPECTED} 
++    $BRT_TOOLS/approx-diff.py $OUTFILE ${EXPECTED} 
+ fi
+ exit 0
+diff --git a/bergamot-translator-tests/tests/cli/test_faithful_translation.sh b/bergamot-translator-tests/tests/cli/test_faithful_translation.sh
+index 8a5a73f..89e7dbf 100644
+--- a/bergamot-translator-tests/tests/cli/test_faithful_translation.sh
++++ b/bergamot-translator-tests/tests/cli/test_faithful_translation.sh
+@@ -17,7 +17,7 @@ ${BRT_MARIAN}/app/bergamot ${BRT_ASYNC_ARGS} < ${BRT_DATA}/simple/bergamot/input
+ if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
+ else
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
+ fi
+ 
+ exit 0
+diff --git a/bergamot-translator-tests/tests/wasm/test_wasm_translation.sh b/bergamot-translator-tests/tests/wasm/test_wasm_translation.sh
+index b803209..d22b637 100644
+--- a/bergamot-translator-tests/tests/wasm/test_wasm_translation.sh
++++ b/bergamot-translator-tests/tests/wasm/test_wasm_translation.sh
+@@ -19,7 +19,7 @@ ${BRT_MARIAN}/tests/wasm --bergamot-mode wasm ${BRT_WASM_ARGS} < ${BRT_DATA}/sim
+ if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
+ else
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
+ fi
+ 
+ exit 0
