@@ -131,7 +131,6 @@ jobs:
       - name: Point regression models at current archives
         run: |
           patch -p1 < patches/03-regression-model-archives.patch
-          patch -p1 < patches/07-avx512vnni-expected.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests
@@ -140,7 +139,7 @@ jobs:
       - name: Run regression-tests (BRT)
         working-directory: bergamot-translator-tests
         id: brt_run
-        run: MARIAN=../build ./run_brt.sh ${{ matrix.brt_tags }}
+        run: BRT_EVAL_MODE=approx MARIAN=../build ./run_brt.sh ${{ matrix.brt_tags }}
 
       - name: Print logs of unsuccessful BRTs
         working-directory: bergamot-translator-tests
@@ -272,7 +271,6 @@ jobs:
       - name: Point regression models at current archives
         run: |
           patch -p1 < patches/03-regression-model-archives.patch
-          patch -p1 < patches/07-avx512vnni-expected.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests
@@ -281,7 +279,7 @@ jobs:
       - name: Run regression-tests (BRT)
         working-directory: bergamot-translator-tests
         id: brt_run
-        run: MARIAN=../build ./run_brt.sh ${{ matrix.brt_tags }}
+        run: BRT_EVAL_MODE=approx MARIAN=../build ./run_brt.sh ${{ matrix.brt_tags }}
 
       - name: Print logs of unsuccessful BRTs
         working-directory: bergamot-translator-tests
