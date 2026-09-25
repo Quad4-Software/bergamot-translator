@@ -169,13 +169,13 @@ jobs:
       matrix:
         include:
           - name: macOS full
-            os: macos-latest
+            os: macos-15-intel
             identifier: mac_full
             cmake: -DCOMPILE_TESTS=on -DUSE_APPLE_ACCELERATE=off -DUSE_FBGEMM=off -DUSE_STATIC_LIBS=off
             brt_tags: ""
             unittests: "true"
           - name: macOS minimal
-            os: macos-latest
+            os: macos-15-intel
             identifier: mac_minimal
             cmake: -DCOMPILE_TESTS=on -DUSE_APPLE_ACCELERATE=off -DUSE_FBGEMM=off -DUSE_STATIC_LIBS=on -DUSE_WASM_COMPATIBLE_SOURCE=on
             brt_tags: "'#'wasm'"
