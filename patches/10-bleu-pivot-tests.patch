@@ -4,12 +4,12 @@ index 71922c6..1a1c383 100644
 +++ b/bergamot-translator-tests/tests/async/test_forward_backward.sh
 @@ -25,7 +25,7 @@ ${BRT_MARIAN}/tests/async --bergamot-mode test-forward-backward "${ARGS[@]}" < $
  if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
-    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  else
--   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED
-+   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  fi
-
+ 
  exit 0
 diff --git a/bergamot-translator-tests/tests/async/test_pivoting.sh b/bergamot-translator-tests/tests/async/test_pivoting.sh
 index 5dca49d..689e12e 100644
@@ -17,38 +17,38 @@ index 5dca49d..689e12e 100644
 +++ b/bergamot-translator-tests/tests/async/test_pivoting.sh
 @@ -25,7 +25,7 @@ ${BRT_MARIAN}/tests/async --bergamot-mode test-pivot "${ARGS[@]}" < ${BRT_DATA}/
  if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
-    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  else
--   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED
-+   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  fi
-
-
+ 
+ 
 diff --git a/bergamot-translator-tests/tests/async/test_pivoting_with_html.sh b/bergamot-translator-tests/tests/async/test_pivoting_with_html.sh
 index 748bf30..6d63b93 100644
 --- a/bergamot-translator-tests/tests/async/test_pivoting_with_html.sh
 +++ b/bergamot-translator-tests/tests/async/test_pivoting_with_html.sh
 @@ -25,7 +25,7 @@ ${BRT_MARIAN}/tests/async --bergamot-mode test-pivot-with-html "${ARGS[@]}" < ${
  if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
-    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  else
--   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED
-+   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  fi
-
-
+ 
+ 
 diff --git a/bergamot-translator-tests/tests/blocking/test_forward_backward.sh b/bergamot-translator-tests/tests/blocking/test_forward_backward.sh
 index f2bdf36..ef64e3f 100644
 --- a/bergamot-translator-tests/tests/blocking/test_forward_backward.sh
 +++ b/bergamot-translator-tests/tests/blocking/test_forward_backward.sh
 @@ -24,7 +24,7 @@ ${BRT_MARIAN}/tests/blocking --bergamot-mode test-forward-backward "${ARGS[@]}"
  if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
-    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  else
--   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED
-+   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  fi
-
+ 
  exit 0
 diff --git a/bergamot-translator-tests/tests/blocking/test_pivoting.sh b/bergamot-translator-tests/tests/blocking/test_pivoting.sh
 index db8209b..e09c917 100644
@@ -56,21 +56,23 @@ index db8209b..e09c917 100644
 +++ b/bergamot-translator-tests/tests/blocking/test_pivoting.sh
 @@ -24,7 +24,7 @@ ${BRT_MARIAN}/tests/blocking --bergamot-mode test-pivot "${ARGS[@]}" < ${BRT_DAT
  if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
-    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  else
--   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED
-+   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  fi
-
-
+ 
+ 
 diff --git a/bergamot-translator-tests/tests/blocking/test_pivoting_with_html.sh b/bergamot-translator-tests/tests/blocking/test_pivoting_with_html.sh
 index fb12396..5e77fae 100644
 --- a/bergamot-translator-tests/tests/blocking/test_pivoting_with_html.sh
 +++ b/bergamot-translator-tests/tests/blocking/test_pivoting_with_html.sh
 @@ -24,7 +24,7 @@ ${BRT_MARIAN}/tests/blocking --bergamot-mode test-pivot-with-html "${ARGS[@]}" <
  if [[ "$BRT_EVAL_MODE" == "approx" ]]; then
-    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+    $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  else
--   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED
-+   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED
+-   $BRT_TOOLS/diff.sh $OUTFILE $EXPECTED 
++   $BRT_TOOLS/approx-diff.py $OUTFILE $EXPECTED 
  fi
+ 
+ 
