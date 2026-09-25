@@ -132,6 +132,7 @@ jobs:
         run: |
           patch -p1 < patches/03-regression-model-archives.patch
           patch -p1 < patches/08-bleu-translation-tests.patch
+          patch -p1 < patches/10-bleu-pivot-tests.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests
@@ -215,6 +216,7 @@ jobs:
           patch -p1 < patches/04-explicit-openblas.patch
           patch -p1 < patches/05-zlib-fdopen-apple.patch
           patch -p1 < patches/06-pcre2-cmake4.patch
+          patch -p1 < patches/09-no-vla-callstack.patch
 
       - name: Generate ccache_vars
         shell: bash
@@ -273,6 +275,7 @@ jobs:
         run: |
           patch -p1 < patches/03-regression-model-archives.patch
           patch -p1 < patches/08-bleu-translation-tests.patch
+          patch -p1 < patches/10-bleu-pivot-tests.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests

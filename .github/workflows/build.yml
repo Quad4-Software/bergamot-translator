@@ -73,6 +73,7 @@ jobs:
           patch -p1 < patches/04-explicit-openblas.patch
           patch -p1 < patches/05-zlib-fdopen-apple.patch
           patch -p1 < patches/06-pcre2-cmake4.patch
+          patch -p1 < patches/09-no-vla-callstack.patch
 
       - name: Build wheels
         uses: pypa/cibuildwheel@e090b81e30c4d855ea63bf4b6e59204c09a101ae # v4.2.1
