@@ -110,7 +110,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake -L .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ${{ matrix.cmake }} ${{ env.ccache_cmake }}
+          cmake -L .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ${{ matrix.cmake }} ${{ env.ccache_cmake }} ${{ env.CMAKE_ARGS }}
 
       - name: Build from source
         working-directory: build
@@ -127,6 +127,9 @@ jobs:
         working-directory: build
         if: matrix.unittests == 'true'
         run: make test
+
+      - name: Point regression models at current archives
+        run: patch -p1 < patches/03-regression-model-archives.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests
@@ -198,8 +201,16 @@ jobs:
 
       - name: Setup BLAS
         run: |
-          echo "LDFLAGS=-L$(brew --prefix)/opt/openblas/lib" >> "$GITHUB_ENV"
-          echo "CPPFLAGS=-I$(brew --prefix)/opt/openblas/include" >> "$GITHUB_ENV"
+          prefix="$(brew --prefix openblas)"
+          echo "LDFLAGS=-L${prefix}/lib" >> "$GITHUB_ENV"
+          echo "CPPFLAGS=-I${prefix}/include" >> "$GITHUB_ENV"
+          echo "CMAKE_ARGS=-DCBLAS_LIBRARIES=${prefix}/lib/libopenblas.dylib -DCBLAS_INCLUDE_DIR=${prefix}/include" >> "$GITHUB_ENV"
+
+      - name: Apply macOS patches
+        run: |
+          patch -p1 < patches/01-marian-fstream-for-macos.patch
+          patch -d 3rd_party/marian-dev/src/3rd_party/sentencepiece -p1 < patches/02-sentencepiece-constexpr.patch
+          patch -p1 < patches/04-explicit-openblas.patch
 
       - name: Generate ccache_vars
         shell: bash
@@ -236,7 +247,7 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake -L .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ${{ matrix.cmake }} ${{ env.ccache_cmake }}
+          cmake -L .. -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ${{ matrix.cmake }} ${{ env.ccache_cmake }} ${{ env.CMAKE_ARGS }}
 
       - name: Build from source
         working-directory: build
@@ -253,6 +264,9 @@ jobs:
         working-directory: build
         if: matrix.unittests == 'true'
         run: make test
+
+      - name: Point regression models at current archives
+        run: patch -p1 < patches/03-regression-model-archives.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests

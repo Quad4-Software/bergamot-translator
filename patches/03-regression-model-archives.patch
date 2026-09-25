@@ -1,0 +1,59 @@
+diff --git a/bergamot-translator-tests/models/download-models.sh b/bergamot-translator-tests/models/download-models.sh
+index 3973a15..1d5a463 100755
+--- a/bergamot-translator-tests/models/download-models.sh
++++ b/bergamot-translator-tests/models/download-models.sh
+@@ -7,14 +7,15 @@ set -euo pipefail
+ function download-archive {
+     URL=$1
+     MODEL=$2
+-    FILE="${MODEL}.tar.gz"
+     OUTPUT_DIR=$3
++    ARCHIVE_NAME=${4:-${MODEL}.tar.gz}
++    FILE="${MODEL}.tar.gz"
+     mkdir -p ${OUTPUT_DIR}
+     if [ -f "$FILE" ]; then
+         echo "File ${FILE} already downloaded."
+     else
+-        echo "Downloading ${FILE}"
+-        wget --quiet --continue $URL/${FILE}
++        echo "Downloading ${ARCHIVE_NAME}"
++        wget --quiet -O "${FILE}" "${URL}/${ARCHIVE_NAME}"
+         tar xf $FILE -C $OUTPUT_DIR/
+         # wasm build doesnt support zipped input 
+         ( cd ${OUTPUT_DIR}/${MODEL} && if [ -f lex.s2t.gz ]; then gunzip -f lex.s2t.gz; fi )
+@@ -54,29 +55,29 @@ python3 ../tools/patch-marian-for-bergamot.py --config-path ${OUTPUT_DIR}/$MODEL
+ 
+ # en->es
+ 
+-URL="http://data.statmt.org/bergamot/models/esen/"
++URL="https://data.statmt.org/bergamot/models/esen"
+ MODEL="enes.student.tiny11"
+ OUTPUT_DIR="enes"
+ 
+-download-archive $URL $MODEL $OUTPUT_DIR
++download-archive $URL $MODEL $OUTPUT_DIR "enes.student.tiny11.v1.a7203a8f8e9daea8.tar.gz"
+ download-ssplit-prefix-file en $OUTPUT_DIR $MODEL
+ python3 ../tools/patch-marian-for-bergamot.py --config-path ${OUTPUT_DIR}/$MODEL/config.intgemm8bitalpha.yml --ssplit-prefix-file nonbreaking_prefix.en
+ 
+ # en->es
+ 
+-URL="http://data.statmt.org/bergamot/models/esen/"
++URL="https://data.statmt.org/bergamot/models/esen"
+ MODEL="esen.student.tiny11"
+ OUTPUT_DIR="esen"
+ 
+-download-archive $URL $MODEL $OUTPUT_DIR
++download-archive $URL $MODEL $OUTPUT_DIR "esen.student.tiny11.v1.09576f06d0ad805e.tar.gz"
+ download-ssplit-prefix-file es $OUTPUT_DIR $MODEL
+ python3 ../tools/patch-marian-for-bergamot.py --config-path ${OUTPUT_DIR}/$MODEL/config.intgemm8bitalpha.yml --ssplit-prefix-file nonbreaking_prefix.es
+ 
+-URL="http://data.statmt.org/bergamot/models/eten"
++URL="https://data.statmt.org/bergamot/models/eten"
+ MODEL="enet.student.tiny11"
+ OUTPUT_DIR="enet"
+ 
+-download-archive $URL $MODEL $OUTPUT_DIR
++download-archive $URL $MODEL $OUTPUT_DIR "enet.student.tiny11.v1.0b8f835b0c154aaa.tar.gz"
+ download-ssplit-prefix-file en $OUTPUT_DIR $MODEL
+ wget https://raw.githubusercontent.com/browsermt/students/master/eten/enet.quality.lr/quality_model.bin -O ${OUTPUT_DIR}/${MODEL}/quality_model.bin || exit 1
+ python3 ../tools/patch-marian-for-bergamot.py --config-path ${OUTPUT_DIR}/$MODEL/config.intgemm8bitalpha.yml --ssplit-prefix-file nonbreaking_prefix.en --quality quality_model.bin

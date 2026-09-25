@@ -12,7 +12,9 @@ on:
   workflow_call:
 
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
 
 env:
   emsdk_version: "3.1.8"
@@ -31,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-13]
+        os: [ubuntu-latest, macos-15-intel]
 
     steps:
       - name: Checkout
@@ -66,6 +68,9 @@ jobs:
           patch -p1 < patches/01-marian-fstream-for-macos.patch
           patch -d 3rd_party/marian-dev/src/3rd_party/sentencepiece -p1 < patches/02-sentencepiece-constexpr.patch
 
+      - name: Use an explicit OpenBLAS when CMake search misses it
+        run: patch -p1 < patches/04-explicit-openblas.patch
+
       - name: Build wheels
         uses: pypa/cibuildwheel@e090b81e30c4d855ea63bf4b6e59204c09a101ae # v4.2.1
         env:
@@ -80,7 +85,7 @@ jobs:
             PYTHON_LOCAL_VERSION_IDENTIFIER=${{ env.PYTHON_LOCAL_VERSION_IDENTIFIER }}
             CCACHE_DIR=/host/${{ env.ccache_dir }}
             CCACHE_BASEDIR=/host/${{ env.ccache_basedir }}
-            CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DBLAS_INCLUDE_DIR=/usr/include/openblas -DCBLAS_LIBRARIES=/usr/lib64/libopenblas.so -DCBLAS_INCLUDE_DIR=/usr/include/openblas
+            CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DBLAS_INCLUDE_DIR=/usr/include/openblas -DBLAS_LIBRARIES=/usr/lib64/libopenblas.so -DCBLAS_LIBRARIES=/usr/lib64/libopenblas.so -DCBLAS_INCLUDE_DIR=/usr/include/openblas
           CIBW_ENVIRONMENT_MACOS: |
             BUILD_ARCH=haswell
             USE_CCACHE=1
@@ -95,8 +100,11 @@ jobs:
             CMAKE_ARGS=-DBLA_VENDOR=OpenBLAS -DCBLAS_LIBRARIES=/usr/local/opt/openblas/lib/libopenblas.dylib -DCBLAS_INCLUDE_DIR=/usr/local/opt/openblas/include
           CIBW_BEFORE_ALL_LINUX: |
             pip install cmake==3.31.6
-            yum install -y ccache
+            yum install -y ccache gcc-gfortran
             yum --enablerepo=powertools install -y openblas-devel
+            if [ ! -e /usr/lib64/libopenblas.so ]; then
+              ln -s /usr/lib64/libopenblas.so.0 /usr/lib64/libopenblas.so
+            fi
             chmod -R a+rwx /host/${{ env.ccache_dir }}
             ccache -s
             ccache -z

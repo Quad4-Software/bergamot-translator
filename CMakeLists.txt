@@ -171,6 +171,11 @@ if(COMPILE_TESTS)
     enable_testing()
 endif(COMPILE_TESTS)
 
+# Apple clang defines SSE, which collides with an Eigen enumerator
+if(APPLE)
+  add_compile_options(-USSE)
+endif()
+
 add_subdirectory(3rd_party)
 add_subdirectory(src)
 

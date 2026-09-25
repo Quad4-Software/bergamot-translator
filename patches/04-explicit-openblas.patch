@@ -1,0 +1,15 @@
+diff --git a/3rd_party/marian-dev/CMakeLists.txt b/3rd_party/marian-dev/CMakeLists.txt
+index e22af91..b7c1e4a 100644
+--- a/3rd_party/marian-dev/CMakeLists.txt
++++ b/3rd_party/marian-dev/CMakeLists.txt
+@@ -673,6 +673,10 @@ if(COMPILE_CPU)
+           set(EXT_LIBS ${EXT_LIBS} ${BLAS_LIBRARIES} ${CBLAS_LIBRARIES})
+           add_definitions(-DBLAS_FOUND=1)
+         endif(CBLAS_FOUND)
++      elseif(CBLAS_LIBRARIES)
++        include_directories(${CBLAS_INCLUDE_DIR})
++        set(EXT_LIBS ${EXT_LIBS} ${CBLAS_LIBRARIES})
++        add_definitions(-DBLAS_FOUND=1)
+       endif(BLAS_FOUND)
+     endif(MKL_FOUND)
+   endif(USE_ONNX_SGEMM)
