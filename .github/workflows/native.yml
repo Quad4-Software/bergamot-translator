@@ -129,7 +129,9 @@ jobs:
         run: make test
 
       - name: Point regression models at current archives
-        run: patch -p1 < patches/03-regression-model-archives.patch
+        run: |
+          patch -p1 < patches/03-regression-model-archives.patch
+          patch -p1 < patches/07-avx512vnni-expected.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests
@@ -211,6 +213,8 @@ jobs:
           patch -p1 < patches/01-marian-fstream-for-macos.patch
           patch -d 3rd_party/marian-dev/src/3rd_party/sentencepiece -p1 < patches/02-sentencepiece-constexpr.patch
           patch -p1 < patches/04-explicit-openblas.patch
+          patch -p1 < patches/05-zlib-fdopen-apple.patch
+          patch -p1 < patches/06-pcre2-cmake4.patch
 
       - name: Generate ccache_vars
         shell: bash
@@ -266,7 +270,9 @@ jobs:
         run: make test
 
       - name: Point regression models at current archives
-        run: patch -p1 < patches/03-regression-model-archives.patch
+        run: |
+          patch -p1 < patches/03-regression-model-archives.patch
+          patch -p1 < patches/07-avx512vnni-expected.patch
 
       - name: Install regression-test framework (BRT)
         working-directory: bergamot-translator-tests

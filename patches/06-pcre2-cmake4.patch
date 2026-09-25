@@ -1,0 +1,12 @@
+diff --git a/3rd_party/ssplit-cpp/cmake/FindPCRE2.cmake b/3rd_party/ssplit-cpp/cmake/FindPCRE2.cmake
+index 8ea55cb..b913daa 100644
+--- a/3rd_party/ssplit-cpp/cmake/FindPCRE2.cmake
++++ b/3rd_party/ssplit-cpp/cmake/FindPCRE2.cmake
+@@ -43,6 +43,7 @@ if(SSPLIT_USE_INTERNAL_PCRE2)
+   string(REPLACE ";" "$<SEMICOLON>" CMAKE_CROSSCOMPILING_EMULATOR_WITH_SEMICOLON "${CMAKE_CROSSCOMPILING_EMULATOR}")
+ 
+   set(PCRE2_CONFIGURE_OPTIONS
++    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+     -DBUILD_SHARED_LIBS=OFF
+     -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}
+     -DCMAKE_BUILD_TYPE=Release

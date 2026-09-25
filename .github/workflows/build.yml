@@ -69,7 +69,10 @@ jobs:
           patch -d 3rd_party/marian-dev/src/3rd_party/sentencepiece -p1 < patches/02-sentencepiece-constexpr.patch
 
       - name: Use an explicit OpenBLAS when CMake search misses it
-        run: patch -p1 < patches/04-explicit-openblas.patch
+        run: |
+          patch -p1 < patches/04-explicit-openblas.patch
+          patch -p1 < patches/05-zlib-fdopen-apple.patch
+          patch -p1 < patches/06-pcre2-cmake4.patch
 
       - name: Build wheels
         uses: pypa/cibuildwheel@e090b81e30c4d855ea63bf4b6e59204c09a101ae # v4.2.1
